@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Продавец | 15 шаблонов описаний</title>
+    <style>
+        :root {
+            --bg-color: #f0f2f5;
+            --card-bg: #ffffff;
+            --text-main: #1a1a1a;
+            --text-secondary: #666666;
+            --accent: #4F46E5;
+            --accent-hover: #4338ca;
+            --input-bg: #f9fafb;
+            --border: #e5e7eb;
+            --result-bg: #f3f4f6;
+            --shadow: 0 10px 40px -10px rgba(0,0,0,0.08);
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --accent: #6366f1;
+            --accent-hover: #818cf8;
+            --input-bg: #334155;
+            --border: #334155;
+            --result-bg: #0f172a;
+            --shadow: 0 10px 40px -10px rgba(0,0,0,0.3);
+        }
+
+        * { transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            max-width: 600px;
+            width: 100%;
+            position: relative;
+        }
+
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--input-bg);
+            border: 1px solid var(--border);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: var(--text-main);
+        }
+        .theme-toggle:hover { transform: scale(1.1); }
+
+        h1 {
+            font-size: 28px;
+            font-weight: 800;
+            margin: 0 0 8px 0;
+            background: linear-gradient(135deg, var(--accent), #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle { color: var(--text-secondary); margin-bottom: 30px; font-size: 14px; }
+
+        label { font-weight: 600; font-size: 13px; color: var(--text-secondary); margin-bottom: 6px; display: block; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        input, select {
+            width: 100%;
+            padding: 14px 16px;
+            margin-bottom: 18px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: var(--input-bg);
+            color: var(--text-main);
+            font-size: 16px;
+            outline: none;
+            box-sizing: border-box;
+        }
+        input:focus, select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1); }
+
+        button.generate {
+            width: 100%;
+            padding: 16px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button.generate:hover { background: var(--accent-hover); transform: translateY(-1px); }
+        button.generate:active { transform: translateY(0); }
+
+        .results-container {
+            margin-top: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .result-card {
+            padding: 20px;
+            background: var(--result-bg);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .result-title {
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .result-text {
+            white-space: pre-wrap;
+            line-height: 1.6;
+            font-size: 15px;
+            color: var(--text-main);
+            margin-bottom: 15px;
+        }
+
+        .copy-btn {
+            width: 100%;
+            padding: 12px;
+            background: transparent;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .copy-btn:hover { background: var(--accent); color: white; }
+        .copy-btn.copied { background: #10b981; border-color: #10b981; color: white; pointer-events: none; }
+
+        .load-more {
+            width: 100%;
+            padding: 14px;
+            background: var(--input-bg);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 15px;
+            margin-top: 10px;
+        }
+        .load-more:hover { background: var(--border); }
+        .load-more.hidden { display: none; }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <button class="theme-toggle" id="themeBtn" title="Сменить тему">🌙</button>
+
+    <h1>AI Продавец Pro</h1>
+    <div class="subtitle">15 шаблонов описаний для Авито за 3 секунды</div>
+
+    <label>Что продаем?</label>
+    <input type="text" id="item" placeholder="Например: iPhone 13, 128GB">
+
+    <label>Цена (₽)</label>
+    <input type="number" id="price" placeholder="50000">
+
+    <label>Состояние</label>
+    <select id="condition">
+        <option value="new">Новое / Запечатанное</option>
+        <option value="perfect">Идеальное (как новое)</option>
+        <option value="good">Хорошее (есть следы использования)</option>
+        <option value="repair">Требует ремонта / На запчасти</option>
+    </select>
+
+    <label>Особенности (через запятую)</label>
+    <input type="text" id="features" placeholder="Коробка, чехол, гарантия, цвет...">
+
+    <button class="generate" onclick="generateAll()">✨ Сгенерировать 15 вариантов</button>
+
+    <div id="resultsContainer" class="results-container"></div>
+</div>
+
+<script>
+    // === ЛОГИКА ТЁМНОЙ ТЕМЫ ===
+    const themeBtn = document.getElementById('themeBtn');
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    themeBtn.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+
+    themeBtn.addEventListener('click', () => {
+        const current = document.documentElement.getAttribute('data-theme');
+        const next = current === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+        themeBtn.textContent = next === 'dark' ? '☀️' : '🌙';
+    });
+
+    // === ШАБЛОНЫ ===
+    const templates = [
+        {
+            name: "Деловой",
+            generate: (item, price, condition, features) => `Продаю ${item}. Состояние: ${condition}. ${features ? 'В комплекте: ' + features + '.' : ''}
+
+Цена: ${price}₽
+Торг уместен при быстром выходе на сделку.
+Осмотр в удобное время. Отправка Авито Доставкой.
+
+Контакты в профиле. Звоните или пишите.`
+        },
+        {
+            name: "Дружелюбный",
+            generate: (item, price, condition, features) => `Привет! 👋 Продаю свой любимый ${item} в состоянии ${condition.toLowerCase()}.
+
+${features ? 'Бонусом отдаю: ' + features + ' 🎁' : ''}
+Цена: ${price}₽ — за такую вещь это просто подарок!
+
+Пишите, расскажу всё подробнее и пришлю фотки 📸
+Отправлю доставкой или встретимся лично 🤝`
+        },
+        {
+            name: "Срочная продажа",
+            generate: (item, price, condition, features) => `⚡ СРОЧНО! Продаю ${item} (${condition}) за ${price}₽!
+
+${features ? 'Всё в наличии: ' + features : ''}
+Цена ниже рынка на 20%. Торг только при самовывозе сегодня-завтра.
+
+Кому нужно — звоните прямо сейчас, завтра будет поздно!`
+        },
+        {
+            name: "Минималистичный",
+            generate: (item, price, condition, features) => `${item}
+Состояние: ${condition}
+${features ? features : ''}
+Цена: ${price}₽
+
+Доставка / Самовывоз`
+        },
+        {
+            name: "Подробный",
+            generate: (item, price, condition, features) => `Продаю ${item} в состоянии ${condition.toLowerCase()}.
+
+Характеристики и особенности:
+${features ? features.split(',').map(f => '• ' + f.trim()).join('\n') : '• Полный комплект'}
+
+Причина продажи: не использую.
+Состояние полностью соответствует описанию. Готов на любые проверки.
+
+Цена: ${price}₽ (торг минимальный).
+Возможна отправка Авито Доставкой (упакую надёжно).
+Пишите в сообщения — отвечаю в течение часа.`
+        },
+        {
+            name: "С акцентом на выгоду",
+            generate: (item, price, condition, features) => `🔥 Выгодное предложение! ${item} всего за ${price}₽!
+
+Состояние: ${condition}
+${features ? 'Бонусы: ' + features : ''}
+
+В магазинах такая вещь стоит дороже. У меня — честная цена без накруток.
+
+Кому нужно — пишите, пока не забрали!`
+        },
+        {
+            name: "Для подарка",
+            generate: (item, price, condition, features) => `Ищете подарок? 🎁
+
+${item} в состоянии ${condition} — идеальный вариант!
+${features ? 'В комплекте: ' + features + ' (можно сразу дарить)' : ''}
+
+Цена: ${price}₽
+Упакую красиво, если нужно 🎀
+
+Пишите, помогу выбрать время для встречи!`
+        },
+        {
+            name: "Сторителлинг",
+            generate: (item, price, condition, features) => `Продаю ${item}. Пользовался аккуратно, вещь в состоянии ${condition.toLowerCase()}.
+
+${features ? 'Сохранял всё: ' + features + '.' : ''}
+Причина продажи — обновился на новую модель.
+
+Цена: ${price}₽. Торг реальному покупателю.
+Отправлю доставкой или встречусь лично. Пишите!`
+        },
+        {
+            name: "Лаконичный с эмодзи",
+            generate: (item, price, condition, features) => `${item} ✅
+Состояние: ${condition}
+${features ? features.split(',').map(f => '✅ ' + f.trim()).join('\n') : ''}
+💰 ${price}₽
+
+📦 Доставка / 📍 Самовывоз
+📩 Пишите!`
+        },
+        {
+            name: "С гарантией качества",
+            generate: (item, price, condition, features) => `Продаю ${item}. Даю гарантию, что всё работает идеально.
+
+Состояние: ${condition}
+${features ? 'В комплекте: ' + features : ''}
+
+Перед продажей всё проверил — никаких скрытых дефектов.
+Цена: ${price}₽. Торг при осмотре.
+
+Если что-то не устроит — верну деньги (в течение 3 дней).`
+        },
+        {
+            name: "Для коллекционеров",
+            generate: (item, price, condition, features) => `Редкий экземпляр для коллекции! ${item} в состоянии ${condition.toLowerCase()}.
+
+${features ? 'Особенности: ' + features : ''}
+Такие вещи сейчас не найти. Состояние отличное, хранился бережно.
+
+Цена: ${price}₽ (без торга, цена адекватная).
+Пишите только если реально интересует.`
+        },
+        {
+            name: "С торгом",
+            generate: (item, price, condition, features) => `Продаю ${item} (${condition}).
+
+${features ? 'Всё в наличии: ' + features : ''}
+Цена: ${price}₽, но реальному покупателю сделаю скидку.
+
+Торг уместен при быстром выходе на сделку.
+Пишите, договоримся!`
+        },
+        {
+            name: "С акцентом на редкость",
+            generate: (item, price, condition, features) => `⚡ Такое не каждый день найдёшь! ${item} в состоянии ${condition.toLowerCase()}.
+
+${features ? 'Особенности: ' + features : ''}
+В магазинах уже не продают / закончились.
+
+Цена: ${price}₽. Кто понял — пишите сразу, заберут быстро.`
+        },
+        {
+            name: "Молодежный",
+            generate: (item, price, condition, features) => `Йоу! 🔥 Продаю ${item}, состояние ${condition.toLowerCase()}.
+
+${features ? 'Прикольные бонусы: ' + features : ''}
+Цена: ${price}₽ — вообще копейки за такую вещь.
+
+Пишите в личку, всё расскажу и покажу 📱
+Отправлю доставкой или встретимся 🤙`
+        },
+        {
+            name: "Премиум",
+            generate: (item, price, condition, features) => `Эксклюзивное предложение. ${item} премиум-класса в состоянии ${condition.toLowerCase()}.
+
+${features ? 'Комплектация: ' + features : ''}
+Вещь для тех, кто ценит качество и статус.
+
+Цена: ${price}₽. Торг только при личной встрече.
+Доставка курьером или самовывоз из центра.
+
+Для связи — пишите в сообщения.`
+        }
+    ];
+
+    let allResults = [];
+    let shownCount = 0;
+
+    // === ГЕНЕРАТОР ===
+    function generateAll() {
+        const item = document.getElementById('item').value.trim();
+        const price = document.getElementById('price').value.trim();
+        const condition = document.getElementById('condition').value;
+        const features = document.getElementById('features').value.trim();
+
+        if (!item) { alert('Введите название товара!'); return; }
+        if (!price) { alert('Введите цену!'); return; }
+
+        const conditionText = {
+            new: 'новое',
+            perfect: 'идеальное',
+            good: 'хорошее',
+            repair: 'требует ремонта'
+        }[condition];
+
+        allResults = templates.map(t => ({
+            name: t.name,
+            text: t.generate(item, price, conditionText, features)
+        }));
+
+        shownCount = 0;
+        document.getElementById('resultsContainer').innerHTML = '';
+        showMore(3);
+    }
+
+    function showMore(count) {
+        const container = document.getElementById('resultsContainer');
+        const end = Math.min(shownCount + count, allResults.length);
+
+        for (let i = shownCount; i < end; i++) {
+            const result = allResults[i];
+            const card = document.createElement('div');
+            card.className = 'result-card';
+            card.innerHTML = `
+                <div class="result-header">
+                    <div class="result-title">${result.name}</div>
+                </div>
+                <div class="result-text">${result.text}</div>
+                <button class="copy-btn" onclick="copyText(this, '${i}')">📋 Копировать</button>
+            `;
+            container.appendChild(card);
+        }
+
+        shownCount = end;
+
+        // Кнопка "Показать ещё"
+        let loadMoreBtn = document.getElementById('loadMoreBtn');
+        if (!loadMoreBtn) {
+            loadMoreBtn = document.createElement('button');
+            loadMoreBtn.id = 'loadMoreBtn';
+            loadMoreBtn.className = 'load-more';
+            loadMoreBtn.textContent = `Показать ещё ${allResults.length - shownCount} вариантов`;
+            loadMoreBtn.onclick = () => showMore(12);
+            container.appendChild(loadMoreBtn);
+        }
+
+        if (shownCount >= allResults.length) {
+            loadMoreBtn.classList.add('hidden');
+        } else {
+            loadMoreBtn.classList.remove('hidden');
+            loadMoreBtn.textContent = `Показать ещё ${allResults.length - shownCount} вариантов`;
+        }
+    }
+
+    function copyText(btn, index) {
+        const text = allResults[index].text;
+        navigator.clipboard.writeText(text).then(() => {
+            btn.textContent = '✅ Скопировано!';
+            btn.classList.add('copied');
+            setTimeout(() => {
+                btn.textContent = '📋 Копировать';
+                btn.classList.remove('copied');
+            }, 2000);
+        });
+    }
+</script>
+
+</body>
+</html>
